@@ -12,7 +12,8 @@ export default (type, params) => {
         return new Promise((resolve, reject) => {
             kii.KiiUser.authenticate(username, password
                 ).then((kiiUser) => {
-                    localStorage.setItem('token', kiiUser.token)
+                    localStorage.setItem('userID', kiiUser.getID())
+                    localStorage.setItem('token', kiiUser.getAccessToken())
                     return resolve()
                 }).catch((err) => {
                     console.error(err)
@@ -22,6 +23,7 @@ export default (type, params) => {
     }
     // called when the user clicks on the logout button
     if (type === AUTH_LOGOUT) {
+        localStorage.removeItem('userID');
         localStorage.removeItem('token');
         return Promise.resolve();
     }
@@ -29,6 +31,7 @@ export default (type, params) => {
     if (type === AUTH_ERROR) {
         const { status } = params;
         if (status === 401 || status === 403) {
+            localStorage.removeItem('userID');
             localStorage.removeItem('token');
             return Promise.reject();
         }
