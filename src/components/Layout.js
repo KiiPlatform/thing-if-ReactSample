@@ -1,9 +1,9 @@
-import { Layout } from 'react-admin';
+import { Layout } from 'react-admin'
 import React from 'react'
-import Menu from './menu/Menu';
+import Menu from './menu/Menu'
 
 const AppLayout = (props) => {
-   return (<Layout {...props} menu={Menu} />)
+  return (<Layout {...props} menu={Menu} />)
 }
 
-export default AppLayout;
+export default AppLayout
