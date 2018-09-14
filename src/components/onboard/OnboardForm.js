@@ -18,6 +18,7 @@ const validate = values => {
 }
 
 const renderTextField = ({
+  value,
   input,
   label,
   meta: { touched, error },
@@ -33,7 +34,8 @@ const renderTextField = ({
   />)
 
 const OnboardForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props
+  const { handleSubmit, pristine, reset, submitting, intialFormValues } = props
+  console.log('onbordForm: ' + JSON.stringify(intialFormValues))
   return (
     <form onSubmit={handleSubmit}>
       <div style={{
@@ -49,6 +51,7 @@ const OnboardForm = props => {
             name="vendorThingID"
             component={renderTextField}
             label="Vendor Thing ID*"
+            value={intialFormValues.vendorThingID}
           />
         </div>
         <div style={{

@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 
 import { onboardRequest as onboardRequestAction } from '../../actions/onboard'
 import { OnboardWithVendorThingIDRequest } from 'thing-if'
+import { getLoginUser, getOnboardedThing } from '../../common/utils'
 
 class Onboard extends React.PureComponent {
   render () {
@@ -17,19 +18,21 @@ class Onboard extends React.PureComponent {
         <CardContent>
           <OnboardForm
             onSubmit={ (formValue) => {
+              const { userID, token } = getLoginUser()
               const requestObj = new OnboardWithVendorThingIDRequest(
                 formValue.vendorThingID,
                 formValue.password,
-                'USER:' + window.localStorage.getItem('userID'),
+                'USER:' + userID,
                 formValue.thingType,
                 formValue.firmwareVersion)
               onboardRequest(
-                window.localStorage.getItem('userID'),
-                window.localStorage.getItem('token'),
+                userID,
+                token,
                 requestObj
               )
             }}
             submitting={submitting}
+            intialFormValues={getOnboardedThing() || {} }
           />
         </CardContent>
       </Card>
