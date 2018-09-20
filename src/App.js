@@ -5,19 +5,21 @@ import CustomRoutes from './CustomRoute'
 import AppLayout from './components/Layout'
 import onboardReducer from './reducers/onboard'
 import onboardSaga from './sagas/onboard'
+import { dataProvider } from './dataProvider'
+import CommandList from './components/commands/CommandList'
 
 class App extends Component {
   render () {
     return (
       <Admin
         authProvider={AuthProvider}
-        dataProvider={{}}
         customRoutes={CustomRoutes}
         appLayout={AppLayout}
         customReducers={{ onboard: onboardReducer }}
         customSagas={[onboardSaga]}
+        dataProvider={dataProvider}
       >
-        <Resource name='commands' />
+        <Resource name='commands' list={CommandList} />
         <Resource name='triggers' />
       </Admin>
     )
