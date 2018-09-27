@@ -116,7 +116,14 @@ const OnboardForm = props => {
   )
 }
 
+function mapStateToProps (state, ownProps) {
+  return {
+    initialValues: {
+      vendorThingID: ownProps.intialFormValues.vendorThingID
+    }
+  }
+}
 export default reduxForm({
   form: 'OnboardForm', // a unique identifier for this form
   validate
-})(OnboardForm)
+}, mapStateToProps)(OnboardForm)
