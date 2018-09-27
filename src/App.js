@@ -7,6 +7,7 @@ import onboardReducer from './reducers/onboard'
 import onboardSaga from './sagas/onboard'
 import { dataProvider } from './dataProvider'
 import CommandList from './components/commands/CommandList'
+import CommandDetail from './components/commands/CommandDetail'
 
 class App extends Component {
   render () {
@@ -19,7 +20,7 @@ class App extends Component {
         customSagas={[onboardSaga]}
         dataProvider={dataProvider}
       >
-        <Resource name='commands' list={CommandList} />
+        <Resource name='commands' list={CommandList} show={CommandDetail}/>
         <Resource name='triggers' />
       </Admin>
     )

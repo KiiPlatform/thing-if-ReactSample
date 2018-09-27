@@ -4,6 +4,7 @@ import {
   List,
   TextField,
   DateField,
+  ShowButton,
 } from 'react-admin'
 
 const CommandList = ({ classes, ...props }) => (
@@ -17,6 +18,7 @@ const CommandList = ({ classes, ...props }) => (
       <TextField source="commandState" />
       <DateField source="created" showTime />
       <DateField source="modified" showTime />
+      <ShowButton />
     </Datagrid>
   </List>
 )
