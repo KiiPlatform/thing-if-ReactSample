@@ -2,6 +2,7 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import TextField from '@material-ui/core/TextField'
 import { Button } from '@material-ui/core'
+import { connect } from 'react-redux'
 
 const validate = values => {
   const errors = {}
@@ -23,19 +24,19 @@ const renderTextField = ({
   label,
   meta: { touched, error },
   ...custom
-}) => (
-  <TextField
-    label={label}
-    floatingLabelText={label}
-    error={touched && error}
-    helperText={error}
-    {...input}
-    {...custom}
-  />)
+}) => {
+  return (
+    <TextField
+      label={label}
+      error={touched && !!error}
+      helperText={error}
+      {...input}
+      {...custom}
+    />)
+}
 
 const OnboardForm = props => {
-  const { handleSubmit, pristine, reset, submitting, intialFormValues } = props
-  console.log('onbordForm: ' + JSON.stringify(intialFormValues))
+  const { handleSubmit, reset, submitting } = props
   return (
     <form onSubmit={handleSubmit}>
       <div style={{
@@ -51,7 +52,6 @@ const OnboardForm = props => {
             name="vendorThingID"
             component={renderTextField}
             label="Vendor Thing ID*"
-            value={intialFormValues.vendorThingID}
           />
         </div>
         <div style={{
@@ -92,7 +92,7 @@ const OnboardForm = props => {
             <Button
               variant="contained"
               color="primary"
-              disabled={pristine || submitting}
+              disabled={submitting}
               type='submit'
             >Onboard
             </Button>
@@ -103,7 +103,7 @@ const OnboardForm = props => {
             <Button
               variant="contained"
               color="secondary"
-              disabled={pristine || submitting}
+              disabled={submitting}
               type='button'
               onClick={reset}
             >
@@ -118,12 +118,10 @@ const OnboardForm = props => {
 
 function mapStateToProps (state, ownProps) {
   return {
-    initialValues: {
-      vendorThingID: ownProps.intialFormValues.vendorThingID
-    }
+    submitting: state.onboard.isLoading
   }
 }
 export default reduxForm({
   form: 'OnboardForm', // a unique identifier for this form
   validate
-}, mapStateToProps)(OnboardForm)
+})(connect(mapStateToProps)(OnboardForm))

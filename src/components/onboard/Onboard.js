@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 import { onboardRequest as onboardRequestAction } from '../../actions/onboard'
 import { OnboardWithVendorThingIDRequest } from 'thing-if'
-import { getLoginUser, getOnboardedThing } from '../../common/utils'
+import { getLoginUser } from '../../common/utils'
 
 class Onboard extends React.PureComponent {
   render () {
@@ -32,7 +32,6 @@ class Onboard extends React.PureComponent {
               )
             }}
             submitting={submitting}
-            intialFormValues={getOnboardedThing() || {} }
           />
         </CardContent>
       </Card>

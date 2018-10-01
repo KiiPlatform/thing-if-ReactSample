@@ -8,7 +8,9 @@ import onboardSaga from './sagas/onboard'
 import { dataProvider } from './dataProvider'
 import CommandList from './components/commands/CommandList'
 import CommandDetail from './components/commands/CommandDetail'
+import { messages } from './TranslatedMessage'
 
+const i18nProvider = locale => messages[locale]
 class App extends Component {
   render () {
     return (
@@ -19,6 +21,8 @@ class App extends Component {
         customReducers={{ onboard: onboardReducer }}
         customSagas={[onboardSaga]}
         dataProvider={dataProvider}
+        locale='en'
+        i18nProvider={i18nProvider}
       >
         <Resource name='commands' list={CommandList} show={CommandDetail}/>
         <Resource name='triggers' />
