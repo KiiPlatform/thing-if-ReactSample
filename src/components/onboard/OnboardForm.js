@@ -116,7 +116,7 @@ const OnboardForm = props => {
   )
 }
 
-function mapStateToProps (state, ownProps) {
+function mapStateToProps (state) {
   return {
     submitting: state.onboard.isLoading
   }

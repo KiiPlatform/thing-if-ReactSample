@@ -1,25 +1,17 @@
 import React from 'react'
-import { Show, SimpleShowLayout, TextField, DateField } from 'react-admin'
-
-const ActionsField = ({ record }) => {
-  return <ul>
-    {record.aliasActions.map(alias => {
-      return <ul key={alias.alias}>
-        {alias.actions.map(action => {
-          return <li key={action.name}>{action.name}: {action.value ? 'on' : 'off'}</li>
-        })}
-      </ul>
-    })
-    }
-  </ul>
-}
-ActionsField.defaultProps = { addLabel: true }
+import { Show, SimpleShowLayout, TextField, DateField, Datagrid, ArrayField, BooleanField } from 'react-admin'
 
 const CommandDetail = (props) => (
   <Show {...props}>
     <SimpleShowLayout>
       <TextField source="title" />
-      <ActionsField source="actions" />
+      <ArrayField source="simplyfiedActions">
+        <Datagrid>
+          <TextField source='alias'/>
+          <TextField source='actionName'/>
+          <BooleanField source='actionValue'/>
+        </Datagrid>
+      </ArrayField>
       <DateField label="Created date" source="created" showTime />
       <DateField label="Modified date" source="modified" showTime />
     </SimpleShowLayout>

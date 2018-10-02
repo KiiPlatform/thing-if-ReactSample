@@ -13,9 +13,24 @@ export const dataProvider = (type, resource, params) => {
     if (resource === 'commands') {
       if (type === GET_LIST) {
         apiAuthor.listCommands(new TypedID(Types.Thing, getOnboardedThing().thingID)).then((result) => {
+          // reconstruct aliasAction to one-dimention array
+          var commands = result.results
+          commands.forEach((cmd, index, array) => {
+            var simplyfiedActions = []
+            cmd.aliasActions.forEach((aa, i) => {
+              aa.actions.forEach((a, j) => {
+                simplyfiedActions.push({
+                  alias: aa.alias,
+                  actionName: a.name,
+                  actionValue: a.value
+                })
+              })
+            })
+            array[index].simplyfiedActions = simplyfiedActions
+          })
           resolve({
-            data: result.results.map(command => ({ ...command, id: command.commandID })),
-            total: result.results.length,
+            data: commands.map(command => ({ ...command, id: command.commandID })),
+            total: commands.length,
           })
         }).catch((err) => {
           reject(err)
