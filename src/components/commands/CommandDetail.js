@@ -1,8 +1,30 @@
 import React from 'react'
-import { Show, SimpleShowLayout, TextField, DateField, Datagrid, ArrayField, BooleanField } from 'react-admin'
+import {
+  Show,
+  SimpleShowLayout,
+  TextField,
+  DateField,
+  Datagrid,
+  ArrayField,
+  BooleanField,
+  ListButton
+} from 'react-admin'
 
+import CardActions from '@material-ui/core/CardActions'
+
+const cardActionStyle = {
+  zIndex: 2,
+  display: 'inline-block',
+  float: 'right',
+}
+
+const CommandDetailShowActions = ({ basePath, data, resource }) => (
+  <CardActions style={cardActionStyle}>
+    <ListButton basePath={basePath} record={data} />
+  </CardActions>
+)
 const CommandDetail = (props) => (
-  <Show {...props}>
+  <Show actions= {<CommandDetailShowActions/> } {...props}>
     <SimpleShowLayout>
       <TextField source="title" />
       <ArrayField source="simplyfiedActions">
