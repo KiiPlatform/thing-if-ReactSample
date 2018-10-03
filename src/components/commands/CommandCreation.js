@@ -26,7 +26,7 @@ const CommandDetailShowActions = ({ basePath, data, resource }) => (
 )
 const CommandDetail = (props) => (
   <Create actions= {<CommandDetailShowActions/> } {...props}>
-    <SimpleForm>
+    <SimpleForm redirect='show'>
       <TextInput source="title" />
       <MuiThemeProvider>
         <ArrayInput source="actions">
@@ -35,7 +35,7 @@ const CommandDetail = (props) => (
           </SimpleFormIterator>
         </ArrayInput>
       </MuiThemeProvider>
-
+      <TextInput source='description' />
     </SimpleForm>
   </Create>
 )

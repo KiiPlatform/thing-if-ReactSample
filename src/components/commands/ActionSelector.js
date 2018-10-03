@@ -1,32 +1,32 @@
 import React, { Component } from 'react'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
-import { getActions } from '../../common/AirConditioner'
+import { getActionDefinitions } from '../../common/AirConditioner'
 import {
   TextInput,
   SelectInput,
   NumberInput,
 } from 'react-admin'
 
-const actions = getActions() || {}
-const actionNames = Object.keys(actions)
+const actionDefs = getActionDefinitions() || {}
+const actionNames = Object.keys(actionDefs)
 
 class ActionInput extends React.Component {
   render () {
     const { actionName, source } = this.props
-    const payloadSchema = actions[actionName].payloadSchema
+    const payloadSchema = actionDefs[actionName].payloadSchema
     const commonProps = {
-      source: source,
-      label: 'value'
+      label: 'value',
+      source: source + '.' + actionName,
     }
     if (payloadSchema.type === 'string') {
       if (payloadSchema.enum) {
         return (<SelectInput
           {...commonProps}
           choices={
-            payloadSchema.enum.map((value, index) => {
+            payloadSchema.enum.map((value) => {
               return {
-                id: index,
+                id: value,
                 name: value,
               }
             })

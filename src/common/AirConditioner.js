@@ -1,6 +1,6 @@
 const schema = require('./AirConditionerSchema.json')
 
-export function getActions () {
+export function getActionDefinitions () {
   if (!schema.actions) {
     return {}
   }
