@@ -8,6 +8,7 @@ import onboardSaga from './sagas/onboard'
 import { dataProvider } from './dataProvider'
 import CommandList from './components/commands/CommandList'
 import CommandDetail from './components/commands/CommandDetail'
+import CommandCreation from './components/commands/CommandCreation'
 import { messages } from './TranslatedMessage'
 
 const i18nProvider = locale => messages[locale]
@@ -24,7 +25,12 @@ class App extends Component {
         locale='en'
         i18nProvider={i18nProvider}
       >
-        <Resource name='commands' list={CommandList} show={CommandDetail}/>
+        <Resource
+          name='commands'
+          list={CommandList}
+          show={CommandDetail}
+          create={CommandCreation}
+        />
         <Resource name='triggers' />
       </Admin>
     )

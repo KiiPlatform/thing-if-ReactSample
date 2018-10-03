@@ -1,0 +1,84 @@
+{
+  "actions": [
+    {
+      "turnOn": {
+        "description": "",
+        "payloadSchema": {
+          "type": "string",
+          "enum": [
+            "On",
+            "Off"
+          ]
+        }
+      }
+    },
+    {
+      "setOperationMode": {
+        "description": "Setting operation mode",
+        "payloadSchema": {
+          "type": "string",
+          "enum": [
+            "Cool",
+            "Heat",
+            "Fan",
+            "Auto"
+          ]
+        }
+      }
+    },
+    {
+      "setTemperature": {
+        "description": "Set temperature",
+        "payloadSchema": {
+          "maximum": 35,
+          "type": "number",
+          "minimum": 10
+        }
+      }
+    },
+    {
+      "setFanSpeed": {
+        "description": "Set speed of fan",
+        "payloadSchema": {
+          "maximum": 5,
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  ],
+  "states": [
+    {
+      "temperature": {
+        "description": "current temperature of room",
+        "payloadSchema": {
+          "maximum": 50,
+          "type": "integer",
+          "minimum": -20
+        }
+      }
+    },
+    {
+      "onOff": {
+        "description": "Current status of On/Off",
+        "payloadSchema": {
+          "type": "string",
+          "enum": [
+            "On",
+            "Off"
+          ]
+        }
+      }
+    },
+    {
+      "fanSpeed": {
+        "description": "Current speed of fan",
+        "payloadSchema": {
+          "maximum": 5,
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  ]
+}
