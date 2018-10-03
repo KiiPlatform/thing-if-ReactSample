@@ -31,7 +31,7 @@ const CommandDetail = (props) => (
         <Datagrid>
           <TextField source='alias'/>
           <TextField source='actionName'/>
-          <BooleanField source='actionValue'/>
+          <TextField source='actionValue'/>
         </Datagrid>
       </ArrayField>
       <DateField label="Created date" source="created" showTime />
