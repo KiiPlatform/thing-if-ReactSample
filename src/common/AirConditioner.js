@@ -12,3 +12,16 @@ export function getActionDefinitions () {
   })
   return newActions
 }
+
+export function getStateDefinitions () {
+  if (!schema.states) {
+    return {}
+  }
+  var newStates = {}
+  schema.states.forEach(state => {
+    Object.keys(state).forEach((stateName) => {
+      newStates[stateName] = state[stateName]
+    })
+  })
+  return newStates
+}

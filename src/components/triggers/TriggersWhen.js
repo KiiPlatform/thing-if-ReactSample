@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 import {
   RadioButtonGroupInput,
-  ArrayInput,
-  SimpleFormIterator,
   DateInput,
 } from 'react-admin'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { connect } from 'react-redux'
 import ClauseSelector from './ClauseSelector'
 
@@ -32,13 +29,10 @@ class TriggersWhenComponent extends Component {
               { id: 'ConditionChanged', name: 'ConditionChanged' },
             ]}
           />
-        </div><MuiThemeProvider>
-          <ArrayInput label='condition' source="condition">
-            <SimpleFormIterator>
-              <ClauseSelector />
-            </SimpleFormIterator>
-          </ArrayInput>
-        </MuiThemeProvider>
+        </div>
+        <div>
+          <ClauseSelector source='clause'/>
+        </div>
       </div>)
     }
   }
