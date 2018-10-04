@@ -10,6 +10,7 @@ import {
 
 import CardActions from '@material-ui/core/CardActions'
 import TriggersWhatComponent from './TriggersWhat'
+import TriggersWhenComponent from './TriggersWhen'
 const cardActionStyle = {
   zIndex: 2,
   display: 'inline-block',
@@ -32,6 +33,7 @@ const TriggerCreation = (props) => (
         <TriggersWhatComponent />
       </FormTab>
       <FormTab label='triggers when'>
+        <TriggersWhenComponent/>
       </FormTab>
     </TabbedForm>
   </Create>

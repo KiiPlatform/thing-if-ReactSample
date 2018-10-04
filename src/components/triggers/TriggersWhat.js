@@ -20,7 +20,6 @@ class TriggersWhatComponent extends Component {
     })
   }
   renderContent = () => {
-    console.log('render content: ' + JSON.stringify(this.props))
     if (this.state.triggersWhat === 'Command') {
       return (<MuiThemeProvider>
         <ArrayInput source="command.actions">
