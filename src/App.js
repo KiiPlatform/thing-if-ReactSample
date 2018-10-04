@@ -10,6 +10,7 @@ import CommandList from './components/commands/CommandList'
 import CommandDetail from './components/commands/CommandDetail'
 import CommandCreation from './components/commands/CommandCreation'
 import { messages } from './TranslatedMessage'
+import TriggerList from './components/triggers/TriggerList'
 
 const i18nProvider = locale => messages[locale]
 class App extends Component {
@@ -31,7 +32,10 @@ class App extends Component {
           show={CommandDetail}
           create={CommandCreation}
         />
-        <Resource name='triggers' />
+        <Resource
+          name='triggers'
+          list={TriggerList}
+        />
       </Admin>
     )
   }

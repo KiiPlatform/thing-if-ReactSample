@@ -1,6 +1,6 @@
 import { APIAuthor, TypedID, Types, App, Site, PostCommandRequest, AliasAction, Action } from 'thing-if'
 import { getLoginUser, getOnboardedThing } from './common/utils'
-import { GET_LIST, CREATE } from 'react-admin'
+import { GET_LIST, CREATE, UPDATE, DELETE } from 'react-admin'
 import { KiiApp } from './config'
 import { simplyfyAliasActions } from './common/ThingIfAdaptor'
 
@@ -54,6 +54,25 @@ export const dataProvider = (type, resource, params) => {
         }).catch((err) => {
           reject(err)
         })
+      }
+    } else if (resource === 'triggers') {
+      if (type === GET_LIST) {
+        apiAuthor.listTriggers(target).then((listResult) => {
+          const triggers = listResult.results
+          resolve({
+            data: triggers.map(trigger => ({ ...trigger, id: trigger.triggerID })),
+            total: triggers.length,
+          })
+        }).catch((err) => {
+          reject(err)
+        })
+      } else if (type === CREATE) {
+        // TODO: implement me
+        reject(Error.new('not implmment yet'))
+      } else if (type === UPDATE) {
+        reject(Error.new('not implmment yet'))
+      } else if (type === DELETE) {
+        reject(Error.new('not implmment yet'))
       }
     }
   })

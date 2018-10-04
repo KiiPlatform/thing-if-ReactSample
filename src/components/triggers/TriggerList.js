@@ -8,16 +8,17 @@ import {
 } from 'react-admin'
 import SimplePagination from '../common/SimplePagination'
 
-const CommandList = ({ classes, ...props }) => (
+const TriggerList = ({ classes, ...props }) => (
   <List
     {...props}
-    bulkActionButtons={false}
     pagination={<SimplePagination/>}
   >
     <Datagrid>
-      <TextField source="id" sortable= {false} />
       <TextField source="title" sortable= {false} />
-      <TextField source="commandState" sortable= {false} />
+      <TextField source="triggersWhat" sortable= {false} />
+      <TextField source="eventSource" sortable= {false} />
+      <TextField source="id" sortable= {false} />
+      <TextField source="enabled" sortable= {false} />
       <DateField source="created" showTime sortable= {false} />
       <DateField source="modified" showTime sortable= {false} />
       <ShowButton />
@@ -25,4 +26,4 @@ const CommandList = ({ classes, ...props }) => (
   </List>
 )
 
-export default CommandList
+export default TriggerList
