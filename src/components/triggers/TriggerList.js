@@ -3,7 +3,7 @@ import {
   Datagrid,
   List,
   TextField,
-  DateField,
+  BooleanField,
   ShowButton,
 } from 'react-admin'
 import SimplePagination from '../common/SimplePagination'
@@ -16,11 +16,9 @@ const TriggerList = ({ classes, ...props }) => (
     <Datagrid>
       <TextField source="title" sortable= {false} />
       <TextField source="triggersWhat" sortable= {false} />
-      <TextField source="eventSource" sortable= {false} />
+      <TextField label='Triggers when' source="predicate.triggersWhen" sortable= {false} />
       <TextField source="id" sortable= {false} />
-      <TextField source="enabled" sortable= {false} />
-      <DateField source="created" showTime sortable= {false} />
-      <DateField source="modified" showTime sortable= {false} />
+      <BooleanField source="disabled" sortable= {false} />
       <ShowButton />
     </Datagrid>
   </List>

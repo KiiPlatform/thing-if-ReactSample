@@ -58,9 +58,14 @@ export const dataProvider = (type, resource, params) => {
     } else if (resource === 'triggers') {
       if (type === GET_LIST) {
         apiAuthor.listTriggers(target).then((listResult) => {
+          console.log('triggers: ' + JSON.stringify(listResult))
           const triggers = listResult.results
           resolve({
-            data: triggers.map(trigger => ({ ...trigger, id: trigger.triggerID })),
+            data: triggers.map(trigger => ({
+              ...trigger,
+              id: trigger.triggerID,
+              triggersWhat: trigger.command ? 'Command' : 'ServerCode',
+            })),
             total: triggers.length,
           })
         }).catch((err) => {
