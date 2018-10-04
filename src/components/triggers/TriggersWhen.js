@@ -19,9 +19,9 @@ class TriggersWhenComponent extends Component {
     })
   }
   renderContent = () => {
-    if (this.state.eventSource === 'States') {
+    if (this.state.eventSource === 'ScheduleOnce') {
       return (<div><DateInput source='scheduleAt'/></div>)
-    } else if (this.state.eventSource === 'ScheduleOnce') {
+    } else if (this.state.eventSource === 'States') {
       return (<div>
         <div>
           <RadioButtonGroupInput
