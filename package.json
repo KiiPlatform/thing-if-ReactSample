@@ -6,7 +6,7 @@
     "kii-cloud-sdk": "^2.4.13",
     "material-ui": "^0.20.2",
     "react": "^16.5.0",
-    "react-admin": "^2.3.0",
+    "react-admin": "^2.3.3",
     "react-dom": "^16.5.0",
     "react-scripts": "1.1.5",
     "thing-if": "^1.0.3"

@@ -6072,9 +6072,9 @@ querystringify@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.0.0.tgz#fa3ed6e68eb15159457c89b37bc6472833195755"
 
-ra-core@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/ra-core/-/ra-core-2.3.0.tgz#6ffde6bcbd4890607895bdbbbde3766f62238e2d"
+ra-core@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/ra-core/-/ra-core-2.3.3.tgz#e9a528b0c362fa5b10358b19f2e0a078bec87020"
   dependencies:
     babel-runtime "~6.26.0"
     classnames "~2.2.5"
@@ -6099,9 +6099,9 @@ ra-language-english@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/ra-language-english/-/ra-language-english-2.3.0.tgz#d25247bd148a57b02ff0480a66388220ee72ef16"
 
-ra-ui-materialui@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/ra-ui-materialui/-/ra-ui-materialui-2.3.0.tgz#39f10c86c1f1cc263a9824b0b0f0475ea3eba44b"
+ra-ui-materialui@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/ra-ui-materialui/-/ra-ui-materialui-2.3.3.tgz#97bebd399af38b0bb210a89bfed53dddd0ac8071"
   dependencies:
     "@material-ui/core" "^1.4.0"
     "@material-ui/icons" "^1.0.0"
@@ -6112,10 +6112,10 @@ ra-ui-materialui@^2.3.0:
     material-ui-chip-input "^1.0.0-beta.6"
     papaparse "^4.1.4"
     prop-types "~15.6.1"
-    ra-core "^2.3.0"
+    ra-core "^2.3.3"
     react-autosuggest "^9.3.2"
     react-dropzone "~4.0.1"
-    react-headroom "^2.2.2"
+    react-headroom "^2.2.4"
     react-redux "~5.0.7"
     react-router-dom "~4.2.2"
     react-transition-group "^2.2.1"
@@ -6172,13 +6172,13 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-admin@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/react-admin/-/react-admin-2.3.0.tgz#1b612b639d5192c5cbe646132df1659b39205b0b"
+react-admin@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/react-admin/-/react-admin-2.3.3.tgz#329003a278b5020e08e87a5eba8720e42245e0db"
   dependencies:
-    ra-core "^2.3.0"
+    ra-core "^2.3.3"
     ra-language-english "^2.3.0"
-    ra-ui-materialui "^2.3.0"
+    ra-ui-materialui "^2.3.3"
 
 react-autosuggest@^9.3.2:
   version "9.4.1"
@@ -6247,9 +6247,9 @@ react-event-listener@^0.6.2:
     prop-types "^15.6.0"
     warning "^4.0.1"
 
-react-headroom@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/react-headroom/-/react-headroom-2.2.2.tgz#5ddea3bc87cd54be38f6f98c3fde4527e2a5fb0f"
+react-headroom@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/react-headroom/-/react-headroom-2.2.4.tgz#e931bf5f91d0ea2c2fbf0f156a2b82d7db6cbe3b"
   dependencies:
     prop-types "^15.5.8"
     raf "^3.3.0"

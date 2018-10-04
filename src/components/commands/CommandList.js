@@ -5,19 +5,25 @@ import {
   TextField,
   DateField,
   ShowButton,
+  Pagination,
 } from 'react-admin'
+
+const SimplePagination = (props) => {
+  return (<Pagination {...props} rowsPerPageOptions={[]} />)
+}
 
 const CommandList = ({ classes, ...props }) => (
   <List
     {...props}
-    sort={{ field: 'id', order: 'DESC' }}
+    bulkActionButtons={false}
+    pagination={<SimplePagination/>}
   >
     <Datagrid>
-      <TextField source="id" />
-      <TextField source="title" />
-      <TextField source="commandState" />
-      <DateField source="created" showTime />
-      <DateField source="modified" showTime />
+      <TextField source="id" sortable= {false} />
+      <TextField source="title" sortable= {false} />
+      <TextField source="commandState" sortable= {false} />
+      <DateField source="created" showTime sortable= {false} />
+      <DateField source="modified" showTime sortable= {false} />
       <ShowButton />
     </Datagrid>
   </List>
