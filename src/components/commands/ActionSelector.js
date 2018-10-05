@@ -1,23 +1,33 @@
 import React, { Component } from 'react'
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
-import { getActionDefinitions } from '../../common/AirConditioner'
+import { connect } from 'react-redux'
 import {
-  TextInput,
   SelectInput,
+  TextInput,
   NumberInput,
 } from 'react-admin'
+import { getActionDefinitions } from '../../common/AirConditioner'
+import { accessAttributeByPath } from '../../common/utils'
 
 const actionDefs = getActionDefinitions() || {}
 const actionNames = Object.keys(actionDefs)
 
-class ActionInput extends React.Component {
-  render () {
-    const { actionName, source } = this.props
-    const payloadSchema = actionDefs[actionName].payloadSchema
+class ActionSelector extends Component {
+  state = {}
+  componentDidMount () {
+    const { savedValues, source } = this.props
+    this.setState({
+      selectedAction: accessAttributeByPath(savedValues, source + '.actionName')
+    })
+  }
+  renderValueField = () => {
+    if (!this.state.selectedAction) {
+      return
+    }
+    const { source } = this.props
+    const payloadSchema = actionDefs[this.state.selectedAction].payloadSchema
     const commonProps = {
       label: 'value',
-      source: source + '.' + actionName,
+      source: source + '.actionValue',
     }
     if (payloadSchema.type === 'string') {
       if (payloadSchema.enum) {
@@ -50,39 +60,37 @@ class ActionInput extends React.Component {
       return null
     }
   }
-}
-
-export default class ActionSelector extends Component {
-  state = {
-    action: actionNames[0]
-  }
-
-  handleChange = (event, index, action) => {
-    this.setState({ action })
+  handleActionChange = (_, selectedAction) => {
+    this.setState({ selectedAction })
   }
   render () {
-    return (
+    const { source } = this.props
+    return (<div>
       <div>
-        <div>
-          <SelectField
-            floatingLabelText='Action'
-            value={this.state.action}
-            onChange={this.handleChange}
-          >
-            {actionNames.map((actionName, index) => {
-              return (
-                <MenuItem key={index} value={actionName} primaryText={actionName} />
-              )
-            })}
-          </SelectField>
-        </div>
-        <div>
-          <ActionInput
-            source={this.props.source}
-            actionName={this.state.action}
-          />
-        </div>
+        <SelectInput
+          source={source + '.actionName'}
+          label='action'
+          choices={
+            actionNames.map((value) => {
+              return {
+                id: value,
+                name: value
+              }
+            })
+          }
+          onChange={this.handleActionChange}
+        />
       </div>
-    )
+      <div>
+        {this.renderValueField()}
+      </div>
+    </div>)
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    savedValues: state.form['record-form'] ? state.form['record-form'].values : null
+  }
+}
+export default connect(mapStateToProps)(ActionSelector)

@@ -30,9 +30,7 @@ export const dataProvider = (type, resource, params) => {
       } else if (type === CREATE) {
         var newActions = []
         params.data.actions.forEach((action) => {
-          Object.keys(action).map((actionName) => {
-            newActions.push(new Action(actionName, action[actionName]))
-          })
+          newActions.push(new Action(action.actionName, action.actionValue))
         })
         const aliasActions = new AliasAction('AC', newActions)
         const postCommandRequest = new PostCommandRequest(
