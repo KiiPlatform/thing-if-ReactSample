@@ -89,7 +89,7 @@ class ClauseItem extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    savedFormValues: state.form['record-form'].values
+    savedFormValues: state.form['record-form'] ? state.form['record-form'].values : null
   }
 }
 export default connect(mapStateToProps)(ClauseItem)

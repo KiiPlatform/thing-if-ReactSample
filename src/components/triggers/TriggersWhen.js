@@ -5,6 +5,7 @@ import {
 } from 'react-admin'
 import { connect } from 'react-redux'
 import ClauseSelector from './ClauseSelector'
+import { TriggersWhen } from 'thing-if'
 
 class TriggersWhenComponent extends Component {
   state = {
@@ -24,10 +25,24 @@ class TriggersWhenComponent extends Component {
           <RadioButtonGroupInput
             source="triggersWhen"
             choices={[
-              { id: 'ConditionTrue', name: 'ConditionTrue' },
-              { id: 'ConditionFalseToTrue', name: 'ConditionFalseToTrue' },
-              { id: 'ConditionChanged', name: 'ConditionChanged' },
+              {
+                id: 'ConditionTrue',
+                name: 'ConditionTrue',
+                value: TriggersWhen.CONDITION_TRUE,
+              },
+              {
+                id: 'ConditionFalseToTrue',
+                name: 'ConditionFalseToTrue',
+                value: TriggersWhen.CONDITION_FALSE_TO_TRUE,
+              },
+              {
+                id: 'ConditionChanged',
+                name: 'ConditionChanged',
+                value: TriggersWhen.CONDITION_CHANGED,
+              },
             ]}
+            optionText='name'
+            optionValue='value'
           />
         </div>
         <div>
@@ -54,6 +69,9 @@ class TriggersWhenComponent extends Component {
 }
 
 const mapStateToProps = (state) => {
+  if (!state.form['record-form'] || !state.form['record-form'].values) {
+    return {}
+  }
   return {
     selectedEventSource: state.form['record-form'].values.eventSource,
   }

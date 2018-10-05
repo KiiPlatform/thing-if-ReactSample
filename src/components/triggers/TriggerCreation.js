@@ -24,7 +24,7 @@ const Actions = ({ basePath, data, resource }) => (
 )
 const TriggerCreation = (props) => (
   <Create actions= {<Actions/> } {...props}>
-    <TabbedForm redirect='show'>
+    <TabbedForm redirect='list'>
       <FormTab label='summary'>
         <TextInput source="title" />
         <TextInput source='description' />

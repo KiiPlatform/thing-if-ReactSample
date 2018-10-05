@@ -1,8 +1,8 @@
-import { APIAuthor, TypedID, Types, App, Site, PostCommandRequest, AliasAction, Action } from 'thing-if'
+import { APIAuthor, TypedID, Types, App, Site, PostCommandRequest, AliasAction, Action, StatePredicate, ScheduleOncePredicate, PostCommandTriggerRequest, TriggerCommandObject, PostServerCodeTriggerRequest, ServerCode, Condition } from 'thing-if'
 import { getLoginUser, getOnboardedThing } from './common/utils'
 import { GET_LIST, CREATE, UPDATE, DELETE } from 'react-admin'
 import { KiiApp } from './config'
-import { simplyfyAliasActions } from './common/ThingIfAdaptor'
+import { simplyfyAliasActions, uiClauseToTriggerClause } from './common/ThingIfAdaptor'
 
 export const dataProvider = (type, resource, params) => {
   return new Promise((resolve, reject) => {
@@ -56,7 +56,6 @@ export const dataProvider = (type, resource, params) => {
     } else if (resource === 'triggers') {
       if (type === GET_LIST) {
         apiAuthor.listTriggers(target).then((listResult) => {
-          console.log('triggers: ' + JSON.stringify(listResult))
           const triggers = listResult.results
           resolve({
             data: triggers.map(trigger => ({
@@ -70,8 +69,80 @@ export const dataProvider = (type, resource, params) => {
           reject(err)
         })
       } else if (type === CREATE) {
-        // TODO: implement me
-        reject(Error.new('not implmment yet'))
+        const {
+          eventSource,
+          triggersWhat,
+          triggersWhen,
+          clause,
+          scheduleAt,
+          command,
+          title,
+          description,
+        } = params.data
+        var predicate
+        if (eventSource === 'States') { // use StatePredicate
+          const condition = new Condition(uiClauseToTriggerClause(clause))
+          predicate = new StatePredicate(condition, triggersWhen)
+        } else if (eventSource === 'ScheduleOnce') {
+          predicate = new ScheduleOncePredicate((new Date(scheduleAt)).getTime())
+        }
+        if (triggersWhat === 'Command') {
+          var triggerActions = []
+          command.actions.forEach((action) => {
+            triggerActions.push(new Action(action.actionName, action.actionValue))
+          })
+          const aliasActions = new AliasAction('AC', triggerActions)
+          const triggerCommand = new TriggerCommandObject(
+            [aliasActions],
+            target,
+            issuer,
+          )
+          const requestObject = new PostCommandTriggerRequest(
+            triggerCommand,
+            predicate,
+            title,
+            description)
+          apiAuthor.postCommandTrigger(target, requestObject).then((newTrigger) => {
+            resolve({
+              data: {
+                ...newTrigger,
+                id: newTrigger.triggerID
+              }
+            })
+          }).catch((err) => {
+            reject(err)
+          })
+        } else if (triggersWhat === 'ServerCode') {
+          const { endpoint, executorAccessToken, targetAppID, parameters } = params.data.serverCode
+          var scParams = {}
+          Object.keys(parameters | []).forEach((param) => {
+            scParams[param.name] = param.value
+          })
+          const servercode = new ServerCode(
+            endpoint,
+            executorAccessToken,
+            targetAppID,
+            scParams
+          )
+          const requestObject = new PostServerCodeTriggerRequest(
+            servercode,
+            predicate,
+            title,
+            description
+          )
+          apiAuthor.postServerCodeTrigger(target, requestObject).then((newTrigger) => {
+            resolve({
+              data: {
+                ...newTrigger,
+                id: newTrigger.triggerID
+              }
+            })
+          }).catch((err) => {
+            reject(err)
+          })
+        } else {
+          reject(new Error('Unknown type of triggers what.'))
+        }
       } else if (type === UPDATE) {
         reject(Error.new('not implmment yet'))
       } else if (type === DELETE) {
