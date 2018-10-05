@@ -146,7 +146,11 @@ export const dataProvider = (type, resource, params) => {
       } else if (type === UPDATE) {
         reject(Error.new('not implmment yet'))
       } else if (type === DELETE) {
-        reject(Error.new('not implmment yet'))
+        apiAuthor.deleteTrigger(target, params.id).then(() => {
+          resolve()
+        }).catch((err) => {
+          reject(err)
+        })
       }
     }
   })

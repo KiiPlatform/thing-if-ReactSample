@@ -5,12 +5,14 @@ import {
   TextField,
   BooleanField,
   ShowButton,
+  DeleteButton,
 } from 'react-admin'
 import SimplePagination from '../common/SimplePagination'
 
 const TriggerList = ({ classes, ...props }) => (
   <List
     {...props}
+    bulkActionButtons={false}
     pagination={<SimplePagination/>}
   >
     <Datagrid>
@@ -20,6 +22,7 @@ const TriggerList = ({ classes, ...props }) => (
       <TextField source="id" sortable= {false} />
       <BooleanField source="disabled" sortable= {false} />
       <ShowButton />
+      <DeleteButton />
     </Datagrid>
   </List>
 )
