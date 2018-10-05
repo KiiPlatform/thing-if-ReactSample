@@ -59,7 +59,6 @@ class ClauseSelector extends Component {
             { id: 'greaterEquals', name: 'greaterEquals' },
             { id: 'lessThan', name: 'lessThan' },
             { id: 'lessEquals', name: 'lessEquals' },
-            { id: 'range', name: 'range' },
             { id: 'and', name: 'and' },
             { id: 'or', name: 'or' },
           ]}

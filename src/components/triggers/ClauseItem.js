@@ -31,9 +31,7 @@ class ClauseItem extends Component {
       label: 'value',
       source: source + '.value',
     }
-    if (type === 'range') {
-
-    } else if (type === 'equals' || type === 'notEquals') {
+    if (type === 'equals' || type === 'notEquals') {
       if (stateSchema.type === 'string') {
         if (stateSchema.enum) {
           return (<SelectInput
