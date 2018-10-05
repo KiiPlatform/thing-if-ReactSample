@@ -5,11 +5,19 @@ import {
   NumberInput,
 } from 'react-admin'
 import { getStateDefinitions } from '../../common/AirConditioner'
+import { connect } from 'react-redux'
+import { accessAttributeByPath } from '../../common/utils'
 
 const stateDefs = getStateDefinitions()
 
 class ClauseItem extends Component {
   state = {}
+  componentDidMount () {
+    const savedClause = accessAttributeByPath(this.props.savedFormValues, this.props.source)
+    this.setState({
+      selectedField: savedClause ? savedClause.field : null
+    })
+  }
   handleFieldChange = (_, selectedValue) => {
     this.setState({ selectedField: selectedValue })
   }
@@ -18,17 +26,14 @@ class ClauseItem extends Component {
       return
     }
     const { source, type } = this.props
-    const { selectedFiled } = this.state
-
     const stateSchema = stateDefs[this.state.selectedField].payloadSchema
-
+    const commonProps = {
+      label: 'value',
+      source: source + '.value',
+    }
     if (type === 'range') {
 
     } else if (type === 'equals' || type === 'notEquals') {
-      const commonProps = {
-        label: 'value',
-        source: source + '.' + selectedFiled,
-      }
       if (stateSchema.type === 'string') {
         if (stateSchema.enum) {
           return (<SelectInput
@@ -49,13 +54,13 @@ class ClauseItem extends Component {
         return (<NumberInput {...commonProps}/>)
       }
     } else if (type === 'greaterThan' || type === 'greaterEquals' || type === 'lessThan' || type === 'lessEquals') {
-      return (<NumberInput label={type} source={source + '.' + type}/>)
+      return (<NumberInput {...commonProps}/>)
     }
   }
   render () {
     var stateNames = []
     const { type, source } = this.props
-    if (type === 'equals' && type === 'notEquals') {
+    if (type === 'equals' || type === 'notEquals') {
       stateNames = Object.keys(stateDefs)
     } else { // only number type is selectable for range types
       Object.keys(stateDefs).map((value) => {
@@ -84,5 +89,9 @@ class ClauseItem extends Component {
     )
   }
 }
-
-export default ClauseItem
+const mapStateToProps = (state) => {
+  return {
+    savedFormValues: state.form['record-form'].values
+  }
+}
+export default connect(mapStateToProps)(ClauseItem)

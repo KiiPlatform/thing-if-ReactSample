@@ -10,12 +10,12 @@ import { connect } from 'react-redux'
 import { accessAttributeByPath } from '../../common/utils'
 
 class ClauseSelector extends Component {
-  constructor (props) {
-    super(props)
-    const savedClause = accessAttributeByPath(props.savedRootClause, this.props.source)
-    this.state = {
+  state = {}
+  componentDidMount () {
+    const savedClause = accessAttributeByPath(this.props.savedFormValues, this.props.source)
+    this.setState({
       clauseType: savedClause ? savedClause.type : null
-    }
+    })
   }
 
   handleClauseChange = (_, selectedValue) => {
@@ -73,7 +73,7 @@ class ClauseSelector extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    savedRootClause: state.form['record-form'].values.clause
+    savedFormValues: state.form['record-form'].values
   }
 }
 export default connect(mapStateToProps)(ClauseSelector)
