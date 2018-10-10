@@ -89,7 +89,6 @@ class ActionSelector extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('formstate: ' + JSON.stringify(state.form['record-form']))
   return {
     savedValues: state.form['record-form'] ? state.form['record-form'].values : null
   }

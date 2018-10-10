@@ -36,11 +36,13 @@ class TriggerCreation extends Component {
         <FormTab label='triggers what'>
           <TriggersWhatComponent
             selectedTriggersWhat={ savedValues ? savedValues.triggersWhat : {}}
+            {...this.props}
           />
         </FormTab>
         <FormTab label='triggers when'>
           <TriggersWhenComponent
             selectedEventSource= { savedValues ? savedValues.eventSource : {}}
+            {...this.props}
           />
         </FormTab>
       </TabbedForm>

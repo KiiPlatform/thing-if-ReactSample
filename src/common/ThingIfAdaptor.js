@@ -27,9 +27,9 @@ export function uiClauseToTriggerClause (clause) {
     })
   }
   if (type === 'and') {
-    triggerClause = new AndClauseInTrigger(subClauses)
+    triggerClause = new AndClauseInTrigger(...subClauses)
   } else if (type === 'or') {
-    triggerClause = new OrClauseInTrigger(subClauses)
+    triggerClause = new OrClauseInTrigger(...subClauses)
   } else if (type === 'equals') {
     triggerClause = new EqualsClauseInTrigger(alias, field, value)
   } else if (type === 'notEquals') {

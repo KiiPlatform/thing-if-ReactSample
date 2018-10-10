@@ -90,22 +90,22 @@ export const dataProvider = (type, resource, params) => {
           eventSource,
           triggersWhat,
           triggersWhen,
-          clause,
+          predicate,
           scheduleAt,
           command,
           title,
           description,
         } = params.data
-        var predicate
+        var thingIfPredicate
         if (eventSource === 'States') { // use StatePredicate
-          const condition = new Condition(uiClauseToTriggerClause(clause))
-          predicate = new StatePredicate(condition, triggersWhen)
+          const condition = new Condition(uiClauseToTriggerClause(predicate.condition.uiClause))
+          thingIfPredicate = new StatePredicate(condition, triggersWhen)
         } else if (eventSource === 'ScheduleOnce') {
-          predicate = new ScheduleOncePredicate((new Date(scheduleAt)).getTime())
+          thingIfPredicate = new ScheduleOncePredicate((new Date(scheduleAt)).getTime())
         }
         if (triggersWhat === 'Command') {
           var triggerActions = []
-          command.actions.forEach((action) => {
+          command.aliasActions[0].actions.forEach((action) => {
             triggerActions.push(new Action(action.actionName, action.actionValue))
           })
           const aliasActions = new AliasAction('AC', triggerActions)
@@ -116,7 +116,7 @@ export const dataProvider = (type, resource, params) => {
           )
           const requestObject = new PostCommandTriggerRequest(
             triggerCommand,
-            predicate,
+            thingIfPredicate,
             title,
             description)
           apiAuthor.postCommandTrigger(target, requestObject).then((newTrigger) => {
@@ -143,7 +143,7 @@ export const dataProvider = (type, resource, params) => {
           )
           const requestObject = new PostServerCodeTriggerRequest(
             servercode,
-            predicate,
+            thingIfPredicate,
             title,
             description
           )

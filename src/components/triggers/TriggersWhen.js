@@ -9,7 +9,7 @@ import { TriggersWhen } from 'thing-if'
 class TriggersWhenComponent extends Component {
   state = {
     eventSource: this.props.selectedEventSource ||
-      this.props.record ? this.props.record.eventSource : 'States'
+      (this.props.record ? this.props.record.eventSource : 'States')
   }
   handleEventSourceChange = (_, selectedValue) => {
     this.setState({
@@ -48,7 +48,7 @@ class TriggersWhenComponent extends Component {
         <div>
           <ClauseSelector
             source='predicate.condition.uiClause'
-            savedValues={this.props.record}
+            {...this.props}
           />
         </div>
       </div>)

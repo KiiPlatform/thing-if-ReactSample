@@ -11,7 +11,8 @@ import { accessAttributeByPath } from '../../common/utils'
 class ClauseSelector extends Component {
   state = {}
   componentDidMount () {
-    const savedClause = accessAttributeByPath(this.props.savedValues, this.props.source)
+    const savedClause = accessAttributeByPath(
+      this.props.record ? this.props.record : this.props, this.props.source)
     this.setState({
       clauseType: savedClause ? savedClause.type : null
     })
