@@ -16,7 +16,7 @@ class ActionSelector extends Component {
   componentDidMount () {
     const { savedValues, source } = this.props
     this.setState({
-      selectedAction: accessAttributeByPath(savedValues, source + '.actionName')
+      selectedAction: accessAttributeByPath(savedValues, source + '.name')
     })
   }
   renderValueField = () => {
@@ -27,7 +27,7 @@ class ActionSelector extends Component {
     const payloadSchema = actionDefs[this.state.selectedAction].payloadSchema
     const commonProps = {
       label: 'value',
-      source: source + '.actionValue',
+      source: source + '.value',
     }
     if (payloadSchema.type === 'string') {
       if (payloadSchema.enum) {
@@ -68,7 +68,7 @@ class ActionSelector extends Component {
     return (<div>
       <div>
         <SelectInput
-          source={source + '.actionName'}
+          source={source + '.name'}
           label='action'
           choices={
             actionNames.map((value) => {

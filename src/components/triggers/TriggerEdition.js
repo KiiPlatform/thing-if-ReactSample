@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react'
 import {
-  Create,
+  Edit,
   TextInput,
   ListButton,
   TabbedForm,
@@ -11,7 +11,6 @@ import {
 import CardActions from '@material-ui/core/CardActions'
 import TriggersWhatComponent from './TriggersWhat'
 import TriggersWhenComponent from './TriggersWhen'
-import { connect } from 'react-redux'
 const cardActionStyle = {
   zIndex: 2,
   display: 'inline-block',
@@ -23,40 +22,23 @@ const Actions = ({ basePath, data, resource }) => (
     <ListButton basePath={basePath} record={data} />
   </CardActions>
 )
-
-class TriggerCreation extends Component {
+class TriggerEdition extends Component {
   render () {
-    const { savedValues } = this.props
-    return (<Create actions= {<Actions/> } {...this.props}>
+    return (<Edit actions= {<Actions/> } {...this.props}>
       <TabbedForm redirect='list'>
         <FormTab label='summary'>
           <TextInput source="title" />
           <TextInput source='description' />
         </FormTab>
         <FormTab label='triggers what'>
-          <TriggersWhatComponent
-            selectedTriggersWhat={ savedValues ? savedValues.triggersWhat : {}}
-            {...this.props}
-          />
+          <TriggersWhatComponent {...this.props}/>
         </FormTab>
         <FormTab label='triggers when'>
-          <TriggersWhenComponent
-            selectedEventSource= { savedValues ? savedValues.eventSource : {}}
-            {...this.props}
-          />
+          <TriggersWhenComponent {...this.props}/>
         </FormTab>
       </TabbedForm>
-    </Create>
-    )
-  }
-}
-const mapStateToProps = (state) => {
-  if (!state.form['record-form'] || !state.form['record-form'].values) {
-    return {}
-  }
-  return {
-    savedValues: state.form['record-form'].values,
+    </Edit>)
   }
 }
 
-export default connect(mapStateToProps)(TriggerCreation)
+export default TriggerEdition

@@ -6,7 +6,6 @@ import {
   DateField,
   Datagrid,
   ArrayField,
-  BooleanField,
   ListButton
 } from 'react-admin'
 

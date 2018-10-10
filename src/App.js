@@ -12,6 +12,7 @@ import CommandCreation from './components/commands/CommandCreation'
 import { messages } from './TranslatedMessage'
 import TriggerList from './components/triggers/TriggerList'
 import TriggerCreation from './components/triggers/TriggerCreation'
+import TriggerEdition from './components/triggers/TriggerEdition'
 
 const i18nProvider = locale => messages[locale]
 class App extends Component {
@@ -37,6 +38,7 @@ class App extends Component {
           name='triggers'
           list={TriggerList}
           create={TriggerCreation}
+          edit={TriggerEdition}
         />
       </Admin>
     )
