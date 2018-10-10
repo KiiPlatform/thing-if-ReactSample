@@ -5,12 +5,8 @@ import {
   TextField,
   DateField,
   ShowButton,
-  Pagination,
 } from 'react-admin'
-
-const SimplePagination = (props) => {
-  return (<Pagination {...props} rowsPerPageOptions={[]} />)
-}
+import SimplePagination from '../common/SimplePagination'
 
 const CommandList = ({ classes, ...props }) => (
   <List

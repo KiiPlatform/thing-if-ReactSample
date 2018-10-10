@@ -70,3 +70,22 @@ export function removeOnboardedThing () {
   window.localStorage.removeItem('onboardedThing-vid')
   window.localStorage.removeItem('onboardedThing-id')
 }
+
+export function accessAttributeByPath (obj, path) {
+  if (!obj) {
+    return null
+  }
+  path = path.replace(/\[(\w+)\]/g, '.$1') // convert indexes to properties
+  path = path.replace(/^\./, '') // strip a leading dot
+  var a = path.split('.')
+  var o = obj
+  for (var i = 0, n = a.length; i < n; ++i) {
+    var k = a[i]
+    if (k in o) {
+      o = o[k]
+    } else {
+      return null
+    }
+  }
+  return o
+}
