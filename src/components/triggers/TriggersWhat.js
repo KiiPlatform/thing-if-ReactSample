@@ -11,7 +11,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 class TriggersWhatComponent extends Component {
   state = {
-    triggersWhat: this.props.selectedTriggersWhat
+    triggersWhat: this.props.selectedTriggersWhat ||
+      (this.props.record ? this.props.record.triggersWhat : 'Command')
   }
   handleTriggersWhatChange = (_, selectedValue) => {
     this.setState({
@@ -21,7 +22,7 @@ class TriggersWhatComponent extends Component {
   renderContent = () => {
     if (this.state.triggersWhat === 'Command') {
       return (<MuiThemeProvider>
-        <ArrayInput source="command.actions">
+        <ArrayInput source="command.aliasActions[0].actions">
           <SimpleFormIterator>
             <ActionSelector />
           </SimpleFormIterator>
@@ -32,7 +33,7 @@ class TriggersWhatComponent extends Component {
         <div><TextInput label='endpoint' source='serverCode.endpoint' validate={required()}/></div>
         <div><TextInput label='access token' source='serverCode.executorAccessToken'/></div>
         <div><TextInput label='target app id' source='serverCode.targetAppID'/></div>
-        <ArrayInput label='parameters' source="serverCode.parameters">
+        <ArrayInput label='parameters' source="serverCode.arrayedParameters">
           <SimpleFormIterator>
             <TextInput label='name' source='name'/>
             <TextInput label='value' source='value'/>

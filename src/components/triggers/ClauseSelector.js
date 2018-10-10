@@ -6,13 +6,12 @@ import {
 } from 'react-admin'
 
 import ClauseItem from './ClauseItem'
-import { connect } from 'react-redux'
 import { accessAttributeByPath } from '../../common/utils'
 
 class ClauseSelector extends Component {
   state = {}
   componentDidMount () {
-    const savedClause = accessAttributeByPath(this.props.savedFormValues, this.props.source)
+    const savedClause = accessAttributeByPath(this.props.savedValues, this.props.source)
     this.setState({
       clauseType: savedClause ? savedClause.type : null
     })
@@ -70,9 +69,4 @@ class ClauseSelector extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    savedFormValues: state.form['record-form'] ? state.form['record-form'].values : null
-  }
-}
-export default connect(mapStateToProps)(ClauseSelector)
+export default ClauseSelector

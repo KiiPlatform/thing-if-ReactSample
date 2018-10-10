@@ -1,8 +1,8 @@
-import { APIAuthor, TypedID, Types, App, Site, PostCommandRequest, AliasAction, Action, StatePredicate, ScheduleOncePredicate, PostCommandTriggerRequest, TriggerCommandObject, PostServerCodeTriggerRequest, ServerCode, Condition } from 'thing-if'
+import { APIAuthor, TypedID, Types, App, Site, PostCommandRequest, AliasAction, Action, StatePredicate, ScheduleOncePredicate, PostCommandTriggerRequest, TriggerCommandObject, PostServerCodeTriggerRequest, ServerCode, Condition, PatchCommandTriggerRequest, PatchServerCodeTriggerRequest } from 'thing-if'
 import { getLoginUser, getOnboardedThing } from './common/utils'
 import { GET_LIST, CREATE, UPDATE, DELETE } from 'react-admin'
 import { KiiApp } from './config'
-import { simplyfyAliasActions, uiClauseToTriggerClause } from './common/ThingIfAdaptor'
+import { simplyfyAliasActions, uiClauseToTriggerClause, triggerClauseToUiClause } from './common/ThingIfAdaptor'
 
 export const dataProvider = (type, resource, params) => {
   return new Promise((resolve, reject) => {
@@ -56,12 +56,29 @@ export const dataProvider = (type, resource, params) => {
     } else if (resource === 'triggers') {
       if (type === GET_LIST) {
         apiAuthor.listTriggers(target).then((listResult) => {
-          const triggers = listResult.results
+          const triggers = listResult.results.map((trigger) => {
+            var serverCode = trigger.serverCode
+            if (serverCode) {
+              serverCode.arrayedParameters = Object.keys(serverCode.parameters).map((key) => {
+                return {
+                  name: key,
+                  value: serverCode.parameters[key]
+                }
+              })
+            }
+            var condition = trigger.predicate.condition
+            if (condition) {
+              condition.uiClause = triggerClauseToUiClause(condition.clause)
+            }
+            return { ...trigger, serverCode, condition }
+          })
+
           resolve({
             data: triggers.map(trigger => ({
               ...trigger,
               id: trigger.triggerID,
               triggersWhat: trigger.command ? 'Command' : 'ServerCode',
+              eventSource: trigger.predicate.condition ? 'States' : 'ScheduleOnce'
             })),
             total: triggers.length,
           })
@@ -144,7 +161,70 @@ export const dataProvider = (type, resource, params) => {
           reject(new Error('Unknown type of triggers what.'))
         }
       } else if (type === UPDATE) {
-        reject(Error.new('not implmment yet'))
+        const {
+          eventSource,
+          triggersWhat,
+          triggersWhen,
+          predicate,
+          scheduleAt,
+          command,
+          title,
+          description,
+        } = params.data
+        var newPredicate
+        if (eventSource === 'States') { // use StatePredicate
+          const condition = new Condition(uiClauseToTriggerClause(predicate.condition.uiClause))
+          newPredicate = new StatePredicate(condition, triggersWhen)
+        } else if (eventSource === 'ScheduleOnce') {
+          newPredicate = new ScheduleOncePredicate((new Date(scheduleAt)).getTime())
+        }
+        if (triggersWhat === 'Command') {
+          const requestObject = new PatchCommandTriggerRequest(
+            command,
+            newPredicate,
+            title,
+            description)
+          apiAuthor.patchCommandTrigger(target, params.id, requestObject).then((newTrigger) => {
+            resolve({
+              data: {
+                ...newTrigger,
+                id: newTrigger.triggerID
+              }
+            })
+          }).catch((err) => {
+            reject(err)
+          })
+        } else if (triggersWhat === 'ServerCode') {
+          const { endpoint, executorAccessToken, targetAppID, arrayedParameters } = params.data.serverCode
+          var newScParams = {}
+          arrayedParameters.forEach((param) => {
+            newScParams[param.name] = param.value
+          })
+          const servercode = new ServerCode(
+            endpoint,
+            executorAccessToken,
+            targetAppID,
+            newScParams
+          )
+          const requestObject = new PatchServerCodeTriggerRequest(
+            servercode,
+            newPredicate,
+            title,
+            description
+          )
+          apiAuthor.patchServerCodeTrigger(target, params.id, requestObject).then((newTrigger) => {
+            resolve({
+              data: {
+                ...newTrigger,
+                id: newTrigger.triggerID
+              }
+            })
+          }).catch((err) => {
+            reject(err)
+          })
+        } else {
+          reject(new Error('Unknown type of triggers what.'))
+        }
       } else if (type === DELETE) {
         apiAuthor.deleteTrigger(target, params.id).then(() => {
           resolve()
