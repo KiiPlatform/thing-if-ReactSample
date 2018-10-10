@@ -8,7 +8,6 @@ import {
 } from 'react-admin'
 import ActionSelector from '../commands/ActionSelector'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { connect } from 'react-redux'
 
 class TriggersWhatComponent extends Component {
   state = {
@@ -59,12 +58,4 @@ class TriggersWhatComponent extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  if (!state.form['record-form'] || !state.form['record-form'].values) {
-    return {}
-  }
-  return {
-    selectedTriggersWhat: state.form['record-form'].values.triggersWhat,
-  }
-}
-export default connect(mapStateToProps)(TriggersWhatComponent)
+export default TriggersWhatComponent

@@ -3,7 +3,6 @@ import {
   RadioButtonGroupInput,
   DateInput,
 } from 'react-admin'
-import { connect } from 'react-redux'
 import ClauseSelector from './ClauseSelector'
 import { TriggersWhen } from 'thing-if'
 
@@ -68,12 +67,4 @@ class TriggersWhenComponent extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  if (!state.form['record-form'] || !state.form['record-form'].values) {
-    return {}
-  }
-  return {
-    selectedEventSource: state.form['record-form'].values.eventSource,
-  }
-}
-export default connect(mapStateToProps)(TriggersWhenComponent)
+export default TriggersWhenComponent
