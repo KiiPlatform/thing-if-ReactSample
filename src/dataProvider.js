@@ -106,7 +106,7 @@ export const dataProvider = (type, resource, params) => {
         if (triggersWhat === 'Command') {
           var triggerActions = []
           command.aliasActions[0].actions.forEach((action) => {
-            triggerActions.push(new Action(action.actionName, action.actionValue))
+            triggerActions.push(new Action(action.name, action.value))
           })
           const aliasActions = new AliasAction('AC', triggerActions)
           const triggerCommand = new TriggerCommandObject(
@@ -227,7 +227,9 @@ export const dataProvider = (type, resource, params) => {
         }
       } else if (type === DELETE) {
         apiAuthor.deleteTrigger(target, params.id).then(() => {
-          resolve()
+          resolve({ data: {
+            id: params.id
+          } })
         }).catch((err) => {
           reject(err)
         })

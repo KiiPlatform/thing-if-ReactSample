@@ -52,7 +52,9 @@ class TriggerCreation extends Component {
 }
 const mapStateToProps = (state) => {
   if (!state.form['record-form'] || !state.form['record-form'].values) {
-    return {}
+    return {
+      savedValues: {}
+    }
   }
   return {
     savedValues: state.form['record-form'].values,
