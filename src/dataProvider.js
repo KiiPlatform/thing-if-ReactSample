@@ -130,9 +130,9 @@ export const dataProvider = (type, resource, params) => {
             reject(err)
           })
         } else if (triggersWhat === 'ServerCode') {
-          const { endpoint, executorAccessToken, targetAppID, parameters } = params.data.serverCode
+          const { endpoint, executorAccessToken, targetAppID, arrayedParameters } = params.data.serverCode
           var scParams = {}
-          Object.keys(parameters | []).forEach((param) => {
+          arrayedParameters.forEach((param) => {
             scParams[param.name] = param.value
           })
           const servercode = new ServerCode(
