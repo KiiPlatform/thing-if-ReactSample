@@ -13,6 +13,8 @@ import { messages } from './TranslatedMessage'
 import TriggerList from './components/triggers/TriggerList'
 import TriggerCreation from './components/triggers/TriggerCreation'
 import TriggerEdition from './components/triggers/TriggerEdition'
+import thingStateReducer from './reducers/thingState'
+import thingStateSaga from './sagas/thingState'
 
 const i18nProvider = locale => messages[locale]
 class App extends Component {
@@ -22,8 +24,8 @@ class App extends Component {
         authProvider={AuthProvider}
         customRoutes={CustomRoutes}
         appLayout={AppLayout}
-        customReducers={{ onboard: onboardReducer }}
-        customSagas={[onboardSaga]}
+        customReducers={{ onboard: onboardReducer, thingState: thingStateReducer }}
+        customSagas={[onboardSaga, thingStateSaga]}
         dataProvider={dataProvider}
         locale='en'
         i18nProvider={i18nProvider}
