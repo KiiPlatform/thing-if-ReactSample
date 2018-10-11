@@ -48,7 +48,6 @@ class TriggersWhenComponent extends Component {
         <div>
           <ClauseSelector
             source='predicate.condition.uiClause'
-            {...this.props}
           />
         </div>
       </div>)
