@@ -7,15 +7,16 @@ import {
 
 import ClauseItem from './ClauseItem'
 import { accessAttributeByPath } from '../../common/utils'
+import { connect } from 'react-redux'
 
 class ClauseSelector extends Component {
-  state = {}
-  componentDidMount () {
-    const savedClause = accessAttributeByPath(
-      this.props.record ? this.props.record : this.props, this.props.source)
-    this.setState({
-      clauseType: savedClause ? savedClause.type : null
-    })
+  savedData = () => {
+    return accessAttributeByPath(
+      this.props.savedValues,
+      this.props.source)
+  }
+  state = {
+    clauseType: this.savedData() ? this.savedData().type : null
   }
 
   handleClauseChange = (_, selectedValue) => {
@@ -32,7 +33,7 @@ class ClauseSelector extends Component {
         source={this.props.source + '.clauses'}
       >
         <SimpleFormIterator>
-          <ClauseSelector />
+          <ClauseSelector savedValues={this.props.savedValues}/>
         </SimpleFormIterator>
       </ArrayInput>)
     } else {
@@ -70,4 +71,10 @@ class ClauseSelector extends Component {
   }
 }
 
-export default ClauseSelector
+const mapStateToProps = (state) => {
+  return {
+    savedValues: state.form['record-form'] ? state.form['record-form'].values : null
+  }
+}
+
+export default connect(mapStateToProps)(ClauseSelector)
