@@ -36,3 +36,7 @@ yarn install && yarn start
 - Send command with predefined trait
 - Create, Update, Delete Triggers
 
+## Onboard a Thing first
+If you use default app. You can use predefined ThingType: `AirConditioner` and FirmwareVersion: `1.0`. 
+Tap onboard tab then fill `Vendor Thing ID`, `Password`, `Thing Type`, and `Version of Firmware`, then click `ONBOARD` button. 
+Then you can try other features. 
